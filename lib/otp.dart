@@ -35,7 +35,7 @@ class _OTPScreenState extends State<OTPScreen> {
             margin: EdgeInsets.only(top: 40),
             child: Center(
               child: Text(
-                'Verify +1-${widget.phone}',
+                'Verify +855-${widget.phone}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
               ),
             ),
@@ -81,8 +81,9 @@ class _OTPScreenState extends State<OTPScreen> {
 
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+1${widget.phone}',
+        phoneNumber: '+855${widget.phone}',
         verificationCompleted: (PhoneAuthCredential credential) async {
+          print('Firebase credential: $credential');
           await FirebaseAuth.instance
               .signInWithCredential(credential)
               .then((value) async {
@@ -101,6 +102,7 @@ class _OTPScreenState extends State<OTPScreen> {
           setState(() {
             _verificationCode = verficationID;
           });
+          print('Pin code: $_verificationCode');
         },
         codeAutoRetrievalTimeout: (String verificationID) {
           setState(() {
